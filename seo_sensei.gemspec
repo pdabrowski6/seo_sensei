@@ -3,7 +3,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'seo_sensei/version'
 
 Gem::Specification.new do |s|
+  s.add_runtime_dependency 'meta-tags', '2.11.1'
+  s.add_runtime_dependency 'rails', '>= 4.2.8'
   s.add_development_dependency "rspec", '~> 3.7', '>= 3.7.0'
+  s.add_development_dependency 'pry'
   s.name        = 'seo_sensei'
   s.version     = SeoSensei::Version
   s.date        = '2019-01-26'
@@ -15,10 +18,5 @@ Gem::Specification.new do |s|
   s.homepage    =
     'http://github.com/rubyhero/seo_sensei'
   s.license       = 'MIT'
-  s.add_development_dependency "activerecord", '>= 4.0.0'
-  s.add_development_dependency "mysql2", '~> 0'
-  s.add_development_dependency "timecop", '~> 0'
-  s.add_development_dependency "factory_bot_rails", '>= 4.0.0'
-  s.add_development_dependency "database_cleaner", '>= 1.0.0'
   s.required_ruby_version = '>= 2.5.0'
 end
