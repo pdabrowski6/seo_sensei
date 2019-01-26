@@ -31,9 +31,31 @@ class ArticlesController < ApplicationController
   enable_seo
 
   def index
-    
+
   end
 end
+```
+
+### Custom information
+
+If you want to display unique title for your article you can do this using the following code:
+
+```ruby
+class ArticlesController < ApplicationController
+  def show
+    seo_tags_with(@article)
+  end
+end
+```
+
+then update translations:
+
+```yaml
+en:
+  seo:
+    articles:
+      show:
+        title: 'This is article page - %{title}'
 ```
 
 ## Copyright
