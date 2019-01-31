@@ -25,8 +25,8 @@ describe SeoSensei::Controllers::Helpers do
   describe 'enable_seo' do
     it 'sets meta tags if the translated data is found' do
       attributes = { title: 'title' }
-      allow(I18n).to receive(:t).with(
-        'seo.articles.show', default: {}
+      allow(SeoSensei::Lookup).to receive(:call).with(
+        controller_name: 'articles', action_name: 'show'
       ).and_return(attributes)
       allow(FakeControllerClass).to receive(:set_meta_tags).with(attributes)
 
@@ -38,10 +38,9 @@ describe SeoSensei::Controllers::Helpers do
     end
 
     it 'does not set meta tags if the translated data is not found' do
-      attributes = {}
-      allow(I18n).to receive(:t).with(
-        'seo.articles.show', default: {}
-      ).and_return(attributes)
+      allow(SeoSensei::Lookup).to receive(:call).with(
+        controller_name: 'articles', action_name: 'show'
+      ).and_return(nil)
       allow(FakeControllerClass).to receive(:set_meta_tags)
 
       FakeControllerClass.enable_seo
@@ -53,83 +52,31 @@ describe SeoSensei::Controllers::Helpers do
   describe 'seo_tags_with' do
     let(:controller_name) { 'articles' }
     let(:action_name)     { 'show' }
+    let(:resource)        { double('resource') }
 
     subject(:controller) { FakeControllerClass.new(controller_name, action_name) }
 
-    context 'when an object with data is given' do
-      let(:object) do
-        double('article', attributes: { 'title' => 'Article 1'})
-      end
+    it 'sets meta tags when translation is found' do
+      translations = { title: 'title' }
+      allow(SeoSensei::Lookup).to receive(:call).with(
+        controller_name: controller_name, action_name: action_name, resource: resource
+      ).and_return(translations)
+      allow(controller).to receive(:set_meta_tags).with(translations)
 
-      it 'does not set meta tags when translations are not found' do
-        translated_seo = {}
-        allow(I18n).to receive(:t).with(
-          "seo.articles.show", default: {}
-        ).and_return(translated_seo)
-        allow(controller).to receive(:set_meta_tags)
+      controller.seo_tags_with(resource)
 
-        controller.seo_tags_with(object)
-
-        expect(controller).not_to have_received(:set_meta_tags)
-      end
-
-      it 'sets meta tags when translations are found' do
-        translated_seo = { title: 'Some title %{title}' }
-        allow(I18n).to receive(:t).with(
-          "seo.articles.show", default: {}
-        ).and_return(translated_seo)
-        translated_title = 'Some title Article 1'
-        allow(I18n).to receive(:t).with(
-          "seo.articles.show.title", object.attributes.symbolize_keys
-        ).and_return(translated_title)
-        allow(controller).to receive(:set_meta_tags).with(
-          { title: translated_title }
-        )
-
-        controller.seo_tags_with(object)
-
-        expect(controller).to have_received(:set_meta_tags).with(
-          { title: translated_title }
-        ).once
-      end
+      expect(controller).to have_received(:set_meta_tags).with(translations).once
     end
 
-    context 'when a hash with data is given' do
-      let(:attributes) do
-        { title: 'Article 1' }
-      end
+    it 'does not set meta tags when translation is not found' do
+      allow(SeoSensei::Lookup).to receive(:call).with(
+        controller_name: controller_name, action_name: action_name, resource: resource
+      ).and_return(nil)
+      allow(controller).to receive(:set_meta_tags)
 
-      it 'does not set meta tags when translations are not found' do
-        translated_seo = {}
-        allow(I18n).to receive(:t).with(
-          "seo.articles.show", default: {}
-        ).and_return(translated_seo)
-        allow(controller).to receive(:set_meta_tags)
+      controller.seo_tags_with(resource)
 
-        controller.seo_tags_with(attributes)
-
-        expect(controller).not_to have_received(:set_meta_tags)
-      end
-
-      it 'sets meta tags when translations are found' do
-        translated_seo = { title: 'Some title %{title}' }
-        allow(I18n).to receive(:t).with(
-          "seo.articles.show", default: {}
-        ).and_return(translated_seo)
-        translated_title = 'Some title Article 1'
-        allow(I18n).to receive(:t).with(
-          "seo.articles.show.title", attributes
-        ).and_return(translated_title)
-        allow(controller).to receive(:set_meta_tags).with(
-          { title: translated_title }
-        )
-
-        controller.seo_tags_with(attributes)
-
-        expect(controller).to have_received(:set_meta_tags).with(
-          { title: translated_title }
-        ).once
-      end
+      expect(controller).not_to have_received(:set_meta_tags)
     end
   end
 end
