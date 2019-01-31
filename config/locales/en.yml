@@ -1,0 +1,8 @@
+# This is a place for your SEO translations
+# You can also merge these locales into your main translation file as well
+en:
+  seo:
+    default:
+      title: 'Your website default title'
+      description: 'Your website default description'
+      keywords: 'Keyword1, Keyword2, Keyword3'
