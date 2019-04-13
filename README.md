@@ -58,6 +58,10 @@ en:
         title: 'This is article page - %{title}'
 ```
 
+## TODO
+
+* Make it easier to include assocation with soeable model in a Rails model
+
 ## Copyright
 
 Copyright (c) 2019 Paweł Dąbrowski.
