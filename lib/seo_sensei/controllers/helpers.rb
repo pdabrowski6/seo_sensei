@@ -14,6 +14,12 @@ module SeoSensei
             end
           end
         end
+
+        def disable_seo(options = {})
+          before_action(options) do
+            set_meta_tags(noindex: true)
+          end
+        end
       end
 
       def seo_tags_with(resource)

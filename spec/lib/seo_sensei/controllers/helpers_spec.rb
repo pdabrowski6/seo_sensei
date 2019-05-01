@@ -22,6 +22,16 @@ describe SeoSensei::Controllers::Helpers do
     end
   end
 
+  describe 'disable_seo' do
+    it 'set meta tags in order to not index pages' do
+      allow(FakeControllerClass).to receive(:set_meta_tags).with(noindex: true)
+
+      FakeControllerClass.disable_seo
+
+      expect(FakeControllerClass).to have_received(:set_meta_tags).with(noindex: true).once
+    end
+  end
+
   describe 'enable_seo' do
     it 'sets meta tags if the translated data is found' do
       attributes = { title: 'title' }
