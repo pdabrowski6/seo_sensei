@@ -58,6 +58,14 @@ en:
         title: 'This is article page - %{title}'
 ```
 
+If you don't want to index given page, you can call `disable_seo`:
+
+```ruby
+class ArticlesController < ApplicationController
+  disable_seo
+end
+```
+
 ## TODO
 
 * Make it easier to include assocation with soeable model in a Rails model
