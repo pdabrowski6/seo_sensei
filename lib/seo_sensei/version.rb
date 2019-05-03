@@ -6,7 +6,7 @@ module SeoSensei
     #
     # @return [String]
     def to_s
-      "0.0.0.8"
+      "0.0.0.9"
     end
   end
 end

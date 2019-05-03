@@ -4,7 +4,7 @@ require 'seo_sensei/version'
 
 Gem::Specification.new do |s|
   s.add_runtime_dependency 'meta-tags', '2.11.1'
-  s.add_runtime_dependency 'rails', '>= 4.2.8'
+  s.add_runtime_dependency 'rails', '>= 5.2.3'
   s.add_development_dependency "rspec", '~> 3.7', '>= 3.7.0'
   s.add_development_dependency 'pry'
   s.name        = 'seo_sensei'
