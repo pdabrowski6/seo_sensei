@@ -1,6 +1,6 @@
 module SeoSensei
   module Models
-    class SeoTag < ::ActiveRecord::Base
+    class SeoTag < ::ApplicationRecord
       belongs_to :seoable, polymorphic: true
       has_one_attached :image
 
