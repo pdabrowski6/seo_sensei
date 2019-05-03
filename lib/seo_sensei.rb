@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'meta-tags'
+require 'seo_sensei/attributes/twitter'
 require 'seo_sensei/attributes/og'
 require 'seo_sensei/attributes/image'
 require 'seo_sensei/lookup'
