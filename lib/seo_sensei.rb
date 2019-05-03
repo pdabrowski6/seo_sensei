@@ -9,6 +9,10 @@ ActiveSupport.on_load(:action_controller) do
   include ::SeoSensei::Controllers::Helpers
 end
 
+ActiveSupport.on_load(:active_record) do
+  include ::SeoSensei::Models::Helpers
+end
+
 module SeoSensei
   class << self
     attr_accessor :configuration
