@@ -4,6 +4,7 @@ require 'meta-tags'
 require 'seo_sensei/lookup'
 require 'seo_sensei/controllers/helpers'
 require 'seo_sensei/models/seo_tag'
+require 'seo_sensei/models/helpers'
 
 ActiveSupport.on_load(:action_controller) do
   include ::SeoSensei::Controllers::Helpers
