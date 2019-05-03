@@ -7,8 +7,8 @@ module SeoSensei
         image_attributes = SeoSensei::Attributes::Image.call(resource)
 
         base_attributes = {
-          title: seo_translation.title,
-          description: seo_translation.description,
+          title: seo_translation['title'],
+          description: seo_translation['description'],
           url: url
         }
 
