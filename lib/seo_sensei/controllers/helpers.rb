@@ -32,7 +32,7 @@ module SeoSensei
             translated_seo, resource, url_for(:only_path => false)
           )
 
-          set_meta_tags(translated_seo.merge(og_attributes, twitter_attributes))
+          set_meta_tags(translated_seo.merge(og_attributes).merge(twitter_attributes))
         end
       end
     end
