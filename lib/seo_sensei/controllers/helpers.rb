@@ -24,8 +24,11 @@ module SeoSensei
 
       def seo_tags_with(resource)
         if (translated_seo = ::SeoSensei::Lookup.call(controller_name: controller_name, action_name: action_name, resource: resource))
-          image_attributes = ::SeoSensei::Attributes::Image.call(resource)
-          set_meta_tags(translated_seo.merge(image_attributes))
+          og_attributes = ::SeoSensei::Attributes::Og.call(
+            translated_seo, resource, url_for(:only_path => false)
+          )
+
+          set_meta_tags(translated_seo.merge(og_attributes))
         end
       end
     end
