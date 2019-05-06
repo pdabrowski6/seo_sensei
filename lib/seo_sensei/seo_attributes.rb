@@ -13,6 +13,9 @@ module SeoSensei
       twitter_attributes = SeoSensei::Attributes::Twitter.call(resource)
 
       {
+        title: resource.title,
+        description: resource.description,
+        keywords: resource.keywords,
         og: {
           title: resource.title,
           description: resource.description,
