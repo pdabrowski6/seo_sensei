@@ -10,7 +10,11 @@ module SeoSensei
           before_action(options) do
             resource_name = options.delete(:for) || controller_name
             if (translated_seo = ::SeoSensei::Lookup.call(controller_name: resource_name, action_name: action_name))
-              set_meta_tags(translated_seo)
+              attributes_service = ::SeoSensei::SeoAttributes.new(
+                translated_seo, nil, url_for(only_path: false)
+              )
+
+              set_meta_tags(attributes_service.call)
             end
           end
         end
@@ -24,15 +28,11 @@ module SeoSensei
 
       def seo_tags_with(resource)
         if (translated_seo = ::SeoSensei::Lookup.call(controller_name: controller_name, action_name: action_name, resource: resource))
-          og_attributes = ::SeoSensei::Attributes::Og.call(
-            translated_seo, resource, url_for(:only_path => false)
+          attributes_service = ::SeoSensei::SeoAttributes.new(
+            translated_seo, resource, url_for(only_path: false)
           )
 
-          twitter_attributes = ::SeoSensei::Attributes::Twitter.call(
-            translated_seo, resource, url_for(:only_path => false)
-          )
-
-          set_meta_tags(translated_seo.merge(og_attributes).merge(twitter_attributes))
+          set_meta_tags(attributes_service.call)
         end
       end
     end

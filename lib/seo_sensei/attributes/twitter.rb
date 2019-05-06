@@ -3,18 +3,16 @@
 module SeoSensei
   module Attributes
     module Twitter
-      def self.call(seo_translation, resource, url)
-        image_attributes = SeoSensei::Attributes::Image.call(resource)
-
+      def self.call(resource)
         base_attributes = {
-          title: seo_translation['title'],
-          description: seo_translation['description'],
-          url: url
+          title: resource.title,
+          description: resource.description,
+          url: resource.url
         }
 
-        unless image_attributes[:image].nil?
+        if resource.use_image?
           base_attributes.merge!(
-            image: image_attributes[:image],
+            image: resource.seo_image_url,
             card: 'summary_large_image'
           )
         end
