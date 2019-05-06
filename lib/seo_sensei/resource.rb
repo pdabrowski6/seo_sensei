@@ -11,15 +11,15 @@ module SeoSensei
     end
 
     def title
-      @translation['title']
+      @translation[:title]
     end
 
     def description
-      @translation['description']
+      @translation[:description]
     end
 
     def keywords
-      @translation['keywords']
+      @translation[:keywords]
     end
 
     def use_image?
@@ -30,7 +30,7 @@ module SeoSensei
       if use_obj_image?
         @obj.seo_image_url
       elsif use_translation_image?
-        @translation['seo_image_url']
+        @translation[:seo_image_url]
       end
     end
 
@@ -38,7 +38,7 @@ module SeoSensei
       if use_obj_image?
         @obj.seo_image_dimensions[:width].to_s
       elsif use_translation_image?
-        @translation['seo_image_width']
+        @translation[:seo_image_width]
       end
     end
 
@@ -46,7 +46,7 @@ module SeoSensei
       if use_obj_image?
         @obj.seo_image_dimensions[:height].to_s
       elsif use_translation_image?
-        @translation['seo_image_height']
+        @translation[:seo_image_height]
       end
     end
 
@@ -59,9 +59,9 @@ module SeoSensei
     end
 
     def use_translation_image?
-      !@translation['seo_image_url'].nil? &&
-        !@translation['seo_image_width'].nil? &&
-        !@translation['seo_image_height'].nil?
+      !@translation[:seo_image_url].nil? &&
+        !@translation[:seo_image_width].nil? &&
+        !@translation[:seo_image_height].nil?
     end
   end
 end
